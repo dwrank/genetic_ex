@@ -1,0 +1,31 @@
+#!/bin/bash
+
+mod=
+
+get_args() {
+  while [[ $# -gt 0 ]]; do
+    arg=$1
+    shift
+
+    case $arg in
+      one_max) mod=one_max ;;
+      onemax) mod=one_max ;;
+      *)
+        echo "Invalid arg: $arg"
+        exit 0
+        ;;
+    esac
+  done
+}
+
+get_args $@
+
+if [[ -z $mod ]]; then
+  echo "Missing arg"
+  echo "module: $mod"
+  exit 0
+fi
+
+echo "Running $mod ..."
+
+MIX_ENV=prod mix run "lib/main.exs" "$mod"
